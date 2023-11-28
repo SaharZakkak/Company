@@ -1,5 +1,5 @@
 package com.webservices.company.domain;
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.List;
 
 public class Employee {
@@ -9,13 +9,13 @@ public class Employee {
     private double salary;
     private String emailAddress;
     private String department;
-    private LocalDate hiringDate;
+    private Instant hiringDate;
     private EmploymentType employmentType;
 
     public Employee() {
     }
 
-    public Employee(String name, int id, double salary, String emailAddress, String department, LocalDate hiringDate, EmploymentType employmentType) {
+    public Employee(String name, int id, double salary, String emailAddress, String department, Instant hiringDate, EmploymentType employmentType) {
         this.name = name;
         this.id = id;
         this.salary = salary;
@@ -65,11 +65,11 @@ public class Employee {
         this.department = department;
     }
 
-    public LocalDate getHiringDate() {
+    public Instant getHiringDate() {
         return hiringDate;
     }
 
-    public void setHiringDate(LocalDate hiringDate) {
+    public void setHiringDate(Instant hiringDate) {
         this.hiringDate = hiringDate;
     }
 

@@ -1,13 +1,13 @@
 package com.webservices.company.domain;
 
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.List;
 
 public class Company {
     private String name;
     private String address;
     private int numberOfEmployees;
-    private LocalDate yearFounded;
+    private Instant dateFound;
     private String typeOfBusiness;
 
     private List <Employee> employees;
@@ -16,11 +16,11 @@ public class Company {
     public Company() {
     }
 
-    public Company(String name, String address, int numberOfEmployees, LocalDate yearFounded, String typeOfBusiness, List<Employee> employees) {
+    public Company(String name, String address, int numberOfEmployees, Instant dateFound, String typeOfBusiness, List<Employee> employees) {
         this.name = name;
         this.address = address;
         this.numberOfEmployees = numberOfEmployees;
-        this.yearFounded = yearFounded;
+        this.dateFound = dateFound;
         this.typeOfBusiness = typeOfBusiness;
         this.employees = employees;
     }
@@ -49,12 +49,12 @@ public class Company {
         this.numberOfEmployees = numberOfEmployees;
     }
 
-    public LocalDate getYearFounded() {
-        return yearFounded;
+    public Instant getDateFound() {
+        return dateFound;
     }
 
-    public void setYearFounded(LocalDate yearFounded) {
-        this.yearFounded = yearFounded;
+    public void setDateFound(Instant dateFound) {
+        this.dateFound = dateFound;
     }
 
     public String getTypeOfBusiness() {

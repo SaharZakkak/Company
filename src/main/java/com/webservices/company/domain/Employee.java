@@ -1,4 +1,5 @@
 package com.webservices.company.domain;
+
 import java.time.Instant;
 import java.util.List;
 
@@ -12,6 +13,8 @@ public class Employee {
     private Instant hiringDate;
     private EmploymentType employmentType;
 
+    private Long companyId;
+
     public Employee() {
     }
 
@@ -23,6 +26,16 @@ public class Employee {
         this.department = department;
         this.hiringDate = hiringDate;
         this.employmentType = employmentType;
+    }
+
+    public Employee(String name, double salary, String emailAddress, String department, Instant hiringDate, EmploymentType employmentType, Long companyId) {
+        this.name = name;
+        this.salary = salary;
+        this.emailAddress = emailAddress;
+        this.department = department;
+        this.hiringDate = hiringDate;
+        this.employmentType = employmentType;
+        this.companyId = companyId;
     }
 
     public String getName() {
@@ -79,5 +92,26 @@ public class Employee {
 
     public void setEmploymentType(EmploymentType employmentType) {
         this.employmentType = employmentType;
+    }
+
+    public Long getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Long companyId) {
+        this.companyId = companyId;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", salary=" + salary +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", department='" + department + '\'' +
+                ", hiringDate=" + hiringDate +
+                ", employmentType=" + employmentType +
+                '}';
     }
 }

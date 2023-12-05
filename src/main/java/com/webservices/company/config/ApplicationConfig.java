@@ -9,17 +9,15 @@ import org.springframework.jdbc.core.RowMapper;
 
 @Configuration
 public class ApplicationConfig {
-
-      @Bean
-      public RowMapper<Company> companyRowMapper(){
-          return  new BeanPropertyRowMapper<>(Company.class);
-      }
-
     @Bean
-    public RowMapper<Employee> employeeRowMapper(){
-        return  new BeanPropertyRowMapper<>(Employee.class);
+    public RowMapper<Company> companyRowMapper() {
+        return new BeanPropertyRowMapper<>(Company.class);
     }
 
+    @Bean
+    public RowMapper<Employee> employeeRowMapper() {
+        return new BeanPropertyRowMapper<>(Employee.class);
+    }
 
 
 }

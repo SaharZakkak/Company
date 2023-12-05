@@ -8,6 +8,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
+import java.util.Optional;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Timestamp;
@@ -15,23 +17,22 @@ import java.util.List;
 
 @Component
 public class CompanyRepository implements ICompanyRepository {
-
     private JdbcTemplate jdbcTemplate;
     private RowMapper<Company> rowMapper;
+    Instant instant = Instant.parse("2021-02-09T11:19:42.12Z");
+    Optional<Instant> op = Optional.of(instant);
 
     public CompanyRepository(JdbcTemplate jdbcTemplate, RowMapper<Company> rowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.rowMapper = rowMapper;
-
     }
 
     @Override
     public Company add(Company companyToBeAdded) {
-        // Preparing the insert statement
         PreparedStatementCreator preparedStatementCreator = (Connection connection) -> {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO public.companies(\n" +
                     "\tname, address, number_of_employees, \"dateFound\", type_of_business)\n" +
-                    "\tVALUES (? ,?, ?, ?, ?)", new String[]{"id"}); // first index is 1
+                    "\tVALUES (? ,?, ?, ?, ?)", new String[]{"id"});
             preparedStatement.setString(1, companyToBeAdded.getName());
             preparedStatement.setString(2, companyToBeAdded.getAddress());
             preparedStatement.setInt(3, companyToBeAdded.getNumberOfEmployees());
@@ -55,7 +56,6 @@ public class CompanyRepository implements ICompanyRepository {
 
     @Override
     public Company update(Long id, Company updatedCompany) {
-        // Preparing the update statement
         PreparedStatementCreator preparedStatementCreator = (Connection connection) -> {
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE public.companies\n" +
                     "\tSET name=?, address=?, number_of_employees=?, \"dateFound\"=?, type_of_business=?\n" +
@@ -63,7 +63,11 @@ public class CompanyRepository implements ICompanyRepository {
             preparedStatement.setString(1, updatedCompany.getName());
             preparedStatement.setString(2, updatedCompany.getAddress());
             preparedStatement.setInt(3, updatedCompany.getNumberOfEmployees());
-            preparedStatement.setTimestamp(4, Timestamp.from(updatedCompany.getDateFound()));
+            if (updatedCompany.getDateFound() == null) {
+                preparedStatement.setTimestamp(4, Timestamp.from(op.orElse(instant)));
+            } else {
+                preparedStatement.setTimestamp(4, Timestamp.from(updatedCompany.getDateFound()));
+            }
             preparedStatement.setString(5, updatedCompany.getTypeOfBusiness());
             preparedStatement.setLong(6, id);
             return preparedStatement;
@@ -74,8 +78,6 @@ public class CompanyRepository implements ICompanyRepository {
 
     @Override
     public void delete(Long id) {
-
-        // Preparing the delete statement
         PreparedStatementCreator preparedStatementCreator = (Connection connection) -> {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM public.companies\n" +
                     " WHERE id = ? ");
@@ -83,15 +85,11 @@ public class CompanyRepository implements ICompanyRepository {
             return preparedStatement;
         };
         jdbcTemplate.update(preparedStatementCreator);
-
     }
 
     @Override
     public List<Company> getAll() {
         List<Company> companies = jdbcTemplate.query("SELECT * FROM public.companies;", rowMapper);
-       /* for (Company company : companies) {
-            System.out.println(company.toString());
-        } */
         return companies;
     }
 }

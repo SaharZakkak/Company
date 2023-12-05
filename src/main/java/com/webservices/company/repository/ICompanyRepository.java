@@ -5,7 +5,6 @@ import com.webservices.company.domain.Company;
 import java.util.List;
 
 public interface ICompanyRepository {
-
     Company add(Company newCompany);
 
     Company get(Long id);
@@ -15,6 +14,4 @@ public interface ICompanyRepository {
     void delete(Long id);
 
     List<Company> getAll();
-
-
 }

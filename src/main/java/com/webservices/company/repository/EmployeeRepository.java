@@ -15,9 +15,7 @@ import java.util.List;
 
 @Component
 public class EmployeeRepository implements IEmployeeRepository {
-
     private final JdbcTemplate jdbcTemplate;
-
     private final RowMapper<Employee> rowMapper;
 
     public EmployeeRepository(JdbcTemplate jdbcTemplate, RowMapper<Employee> rowMapper) {
@@ -95,9 +93,6 @@ public class EmployeeRepository implements IEmployeeRepository {
     @Override
     public List<Employee> getAll() {
         List<Employee> employees = jdbcTemplate.query("SELECT * FROM public.employees;", rowMapper);
-       /* for (Employee employee : employees) {
-            System.out.println(employee.toString());
-        } */
         return employees;
     }
 }

@@ -19,8 +19,6 @@ import java.util.List;
 public class CompanyRepository implements ICompanyRepository {
     private JdbcTemplate jdbcTemplate;
     private RowMapper<Company> rowMapper;
-    Instant instant = Instant.parse("2021-02-09T11:19:42.12Z");
-    Optional<Instant> op = Optional.of(instant);
 
     public CompanyRepository(JdbcTemplate jdbcTemplate, RowMapper<Company> rowMapper) {
         this.jdbcTemplate = jdbcTemplate;
@@ -63,11 +61,7 @@ public class CompanyRepository implements ICompanyRepository {
             preparedStatement.setString(1, updatedCompany.getName());
             preparedStatement.setString(2, updatedCompany.getAddress());
             preparedStatement.setInt(3, updatedCompany.getNumberOfEmployees());
-            if (updatedCompany.getDateFound() == null) {
-                preparedStatement.setTimestamp(4, Timestamp.from(op.orElse(instant)));
-            } else {
-                preparedStatement.setTimestamp(4, Timestamp.from(updatedCompany.getDateFound()));
-            }
+            preparedStatement.setTimestamp(4, updatedCompany.getDateFound() != null ? Timestamp.from(updatedCompany.getDateFound()) : null);
             preparedStatement.setString(5, updatedCompany.getTypeOfBusiness());
             preparedStatement.setLong(6, id);
             return preparedStatement;

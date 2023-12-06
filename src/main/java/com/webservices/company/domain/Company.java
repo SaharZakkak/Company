@@ -10,10 +10,18 @@ public class Company {
     private Instant dateFound;
     private String typeOfBusiness;
 
-    private List <Employee> employees;
+    private List<Employee> employees;
 
 
     public Company() {
+    }
+
+    public Company(String name, String address, int numberOfEmployees, Instant dateFound, String typeOfBusiness) {
+        this.name = name;
+        this.address = address;
+        this.numberOfEmployees = numberOfEmployees;
+        this.dateFound = dateFound;
+        this.typeOfBusiness = typeOfBusiness;
     }
 
     public Company(String name, String address, int numberOfEmployees, Instant dateFound, String typeOfBusiness, List<Employee> employees) {
@@ -73,4 +81,14 @@ public class Company {
         this.employees = employees;
     }
 
+    @Override
+    public String toString() {
+        return "Company{" +
+                "name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", numberOfEmployees=" + numberOfEmployees +
+                ", dateFound=" + dateFound +
+                ", typeOfBusiness='" + typeOfBusiness + '\'' +
+                '}';
+    }
 }

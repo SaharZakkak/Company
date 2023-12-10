@@ -2,6 +2,7 @@ package com.webservices.company.repository;
 
 import com.webservices.company.domain.Company;
 import com.webservices.company.domain.Employee;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -49,9 +50,12 @@ public class EmployeeRepository implements IEmployeeRepository {
 
     @Override
     public Employee get(Long employeeId) {
-        Employee employee = jdbcTemplate.queryForObject("SELECT * FROM public.employees\n" +
-                "Where id = " + employeeId, rowMapper);
-        return employee;
+        try {
+            return jdbcTemplate.queryForObject("SELECT * FROM public.employees\n" +
+                    "Where id = ?", rowMapper,employeeId);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
@@ -95,4 +99,22 @@ public class EmployeeRepository implements IEmployeeRepository {
         List<Employee> employees = jdbcTemplate.query("SELECT * FROM public.employees;", rowMapper);
         return employees;
     }
+
+    @Override
+    public List<Employee> getAllByCompanyId(Long companyId) {
+        List<Employee> employeesList = jdbcTemplate.query("SELECT * FROM employees Where company_id = ?", rowMapper, companyId);
+        return employeesList;
+    }
+
+    public void deleteAllByCompanyId(Long companyId) {
+        PreparedStatementCreator preparedStatementCreator = (Connection connection) -> {
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM public.employees\n" +
+                    "\tWHERE company_id = ?");
+            preparedStatement.setLong(1, companyId);
+            return preparedStatement;
+        };
+        jdbcTemplate.update(preparedStatementCreator);
+
+    }
+
 }

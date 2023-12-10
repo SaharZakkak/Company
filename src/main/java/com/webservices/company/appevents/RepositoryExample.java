@@ -23,9 +23,7 @@ public class RepositoryExample {
 
     @EventListener(ApplicationReadyEvent.class)
     public void companyRepositoryPlayground() {
-        Company company = iCompanyRepository.get(1L);  // retrieve company with id =1
-        System.out.println(company.toString());
-
+     /*
         Company company2 = iCompanyRepository.get(2L); // retrieve company with id =2
         System.out.println(company2.toString());
 
@@ -35,8 +33,8 @@ public class RepositoryExample {
 
         //Update a company in the database
 
-        Company companyToUpdate = new Company("Green", "Jerusalem", 100, Instant.now(), "Eco-Friendly Products");
-        Company companyAfterUpdate = iCompanyRepository.update(5L, companyToUpdate);
+        Company companyToUpdate = new Company("Green", "Jerusalem", 98, null, "Eco-Friendly Products");
+        Company companyAfterUpdate = iCompanyRepository.update(17L, companyToUpdate);
 
         //Delete a company with id = 6  from database
         // iCompanyRepository.delete(6L);
@@ -58,7 +56,14 @@ public class RepositoryExample {
         //Update an employee in the database
         Employee employeeToUpdate = new Employee("Sandy", 4500, "Sandy@gmail.com", "Accounting", Instant.now(), EmploymentType.FULL_TIME, 2L);
         Employee employeeAfterUpdate = iEmployeeRepository.update(2L, employeeToUpdate);
+        */
 
+        //  Company company = iCompanyRepository.get(2l);
+        //  iEmployeeRepository.getAllByCompanyId(41L);
+        //   iEmployeeRepository.deleteAllByCompanyId(5L);
+        // iEmployeeRepository.get(5l);
+        //   Company company = iCompanyRepository.get(6L);  // retrieve company with id =1
+        // System.out.println(company.toString());
 
     }
 

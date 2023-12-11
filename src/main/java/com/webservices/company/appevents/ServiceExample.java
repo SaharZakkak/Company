@@ -60,9 +60,9 @@ public class ServiceExample {
         iCompanyService.update(8L,companyToUpdate);*/
 
         // iCompanyService.delete(47l);
-        // Employee newEmployee = new Employee("Tamara", 6500, "Tamara@gmail.com", "HR", Instant.now(), EmploymentType.PART_TIME, 12L);
-        // iEmployeeService.update(71l, newEmployee);
-        //iEmployeeService.get(42l);
+        //  Employee newEmployee = new Employee("Tamara", 6500, "Tamara@gmail.com", "HR", Instant.now(), EmploymentType.PART_TIME, 12L);
+        //   iEmployeeService.update(71888l, newEmployee);
+        //  iEmployeeService.get(426666666l);
         //iEmployeeService.add(8l, newEmployee);
 
 

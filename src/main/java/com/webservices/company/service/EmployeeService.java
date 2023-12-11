@@ -24,13 +24,14 @@ public class EmployeeService implements IEmployeeService {
         if (employee == null) {
             throw new ResourceNotFoundException("Employee with id" + id + "is not found!");
         }
-        System.out.println(employee);
         return employee;
-
     }
 
     @Override
     public Employee add(Long companyId, Employee employee) {
+        if(iCompanyRepository.get(companyId)== null){
+            throw new ResourceNotFoundException("Company with companyId: "+ companyId + "is not available!");
+        }
         if (employee.getName() == null) {
             throw new CompanyException("Employee's name can't be a null value !");
         }
@@ -43,6 +44,9 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public Employee update(Long employeeId, Employee employeeToUpdate) {
+        if(iEmployeeRepository.get(employeeId) == null){
+            throw new ResourceNotFoundException("Employee with employeeId: " + employeeId + "is not available!");
+        }
         if (employeeToUpdate.getName() == null) {
             throw new CompanyException("Employee's name can't be a null value !");
         }

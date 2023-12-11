@@ -2,6 +2,8 @@ package com.webservices.company.repository;
 
 import com.webservices.company.domain.Company;
 import com.webservices.company.exceptions.ResourceNotFoundException;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -51,8 +53,8 @@ public class CompanyRepository implements ICompanyRepository {
     public Company get(Long id) {
         Company company = null;
         try {
-            company = jdbcTemplate.queryForObject("select * from companies where id =  " + id, rowMapper);
-        } catch (ResourceNotFoundException e){
+            company = jdbcTemplate.queryForObject("select * from companies where id = ?", rowMapper,id);
+        } catch (EmptyResultDataAccessException e){
            return null;
         }
         return company;

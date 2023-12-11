@@ -52,10 +52,6 @@ public class RepositoryExample {
         //  iEmployeeRepository.delete(5L);
 
         // iEmployeeRepository.getAll();
-
-        //Update an employee in the database
-        Employee employeeToUpdate = new Employee("Sandy", 4500, "Sandy@gmail.com", "Accounting", Instant.now(), EmploymentType.FULL_TIME, 2L);
-        Employee employeeAfterUpdate = iEmployeeRepository.update(2L, employeeToUpdate);
         */
 
         //  Company company = iCompanyRepository.get(2l);
@@ -64,6 +60,11 @@ public class RepositoryExample {
         // iEmployeeRepository.get(5l);
         //   Company company = iCompanyRepository.get(6L);  // retrieve company with id =1
         // System.out.println(company.toString());
+        // Employee employee = new Employee("Celina", 4500, "Celina@gmail.com", "Accounting", Instant.now(), EmploymentType.FULL_TIME, 2L);
+        // iEmployeeRepository.add(employee, 42l);
+        //Update an employee in the database
+       /* Employee employeeToUpdate = new Employee("Sandy", 4500, "Sandy@gmail.com", "Accounting", Instant.now(), EmploymentType.FULL_TIME, 2L);
+        Employee employeeAfterUpdate = iEmployeeRepository.update(5L, employeeToUpdate); */
 
     }
 

@@ -77,7 +77,6 @@ public class CompanyService implements ICompanyService {
         }
         iEmployeeRepository.deleteAllByCompanyId(companyId); // delete all employees in company
         iCompanyRepository.delete(companyId);
-        System.out.println(company.getName() + "has been deleted.");
     }
 
 }

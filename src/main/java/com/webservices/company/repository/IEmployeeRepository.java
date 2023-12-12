@@ -17,4 +17,7 @@ public interface IEmployeeRepository {
 
     List<Employee> getAll();
 
+    List<Employee> getAllByCompanyId(Long id);
+
+    void deleteAllByCompanyId(Long companyId);
 }

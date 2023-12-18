@@ -21,6 +21,7 @@ public class CompanyService implements ICompanyService {
         this.iCompanyRepository = iCompanyRepository;
         this.iEmployeeRepository = iEmployeeRepository;
     }
+
     @Override
     public Company get(Long companyId) {
         Company company = iCompanyRepository.get(companyId);
@@ -78,5 +79,4 @@ public class CompanyService implements ICompanyService {
         iEmployeeRepository.deleteAllByCompanyId(companyId); // delete all employees in company
         iCompanyRepository.delete(companyId);
     }
-
 }

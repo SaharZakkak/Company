@@ -1,35 +1,41 @@
 package com.webservices.company.service;
 
+import com.webservices.company.domain.Company;
 import com.webservices.company.domain.Employee;
 import com.webservices.company.exceptions.CompanyException;
 import com.webservices.company.exceptions.IllegalArgException;
 import com.webservices.company.exceptions.ResourceNotFoundException;
+import com.webservices.company.repository.CompanyRepo;
+import com.webservices.company.repository.EmployeeRepo;
 import com.webservices.company.repository.ICompanyRepository;
 import com.webservices.company.repository.IEmployeeRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class EmployeeService implements IEmployeeService {
     private final IEmployeeRepository iEmployeeRepository;
     private final ICompanyRepository iCompanyRepository;
+    private final EmployeeRepo employeeRepo;
+    private final CompanyRepo companyRepo;
 
-    public EmployeeService(IEmployeeRepository iEmployeeRepository, ICompanyRepository iCompanyRepository) {
+    public EmployeeService(IEmployeeRepository iEmployeeRepository, ICompanyRepository iCompanyRepository, EmployeeRepo employeeRepo, CompanyRepo companyRepo) {
         this.iEmployeeRepository = iEmployeeRepository;
         this.iCompanyRepository = iCompanyRepository;
+        this.employeeRepo = employeeRepo;
+        this.companyRepo = companyRepo;
     }
 
     @Override
     public Employee get(Long id) {
-        Employee employee = iEmployeeRepository.get(id);
-        if (employee == null) {
-            throw new ResourceNotFoundException("Employee with id" + id + "is not found!");
-        }
-        return employee;
+        return employeeRepo.findById(id.intValue()).
+                orElseThrow(() -> new ResourceNotFoundException("Employee with id" + id + "is not found!"));
     }
 
+    @Transactional
     @Override
     public Employee add(Long companyId, Employee employee) {
-        if (iCompanyRepository.get(companyId) == null) {
+        if (companyRepo.findById(companyId).isEmpty()) {
             throw new ResourceNotFoundException("Company with companyId: " + companyId + "is not available!");
         }
         if (employee.getName() == null) {
@@ -38,13 +44,13 @@ public class EmployeeService implements IEmployeeService {
         if (employee.getSalary() < 0) {
             throw new IllegalArgException("Salary can't be a negative value!");
         }
-        Employee addedEmployee = iEmployeeRepository.add(employee, companyId);
-        return addedEmployee;
+        return employeeRepo.save(employee);
     }
 
+    @Transactional
     @Override
     public Employee update(Long employeeId, Employee employeeToUpdate) {
-        if (iEmployeeRepository.get(employeeId) == null) {
+        if (employeeRepo.findById(employeeId.intValue()).isEmpty()) {
             throw new ResourceNotFoundException("Employee with employeeId: " + employeeId + "is not available!");
         }
         if (employeeToUpdate.getName() == null) {
@@ -53,16 +59,22 @@ public class EmployeeService implements IEmployeeService {
         if (employeeToUpdate.getSalary() < 0) {
             throw new IllegalArgException("Salary can't be a negative value!");
         }
-        Employee updatedEmployee = iEmployeeRepository.update(employeeId, employeeToUpdate);
+        Employee updatedEmployee = get(employeeId);
+        updatedEmployee.setId(employeeId.intValue());
+        updatedEmployee.setCompanyId(employeeToUpdate.getCompanyId());
+        updatedEmployee.setDepartment(employeeToUpdate.getDepartment());
+        updatedEmployee.setName(employeeToUpdate.getName());
+        updatedEmployee.setSalary(employeeToUpdate.getSalary());
+        updatedEmployee.setEmailAddress(employeeToUpdate.getEmailAddress());
+        updatedEmployee.setEmploymentType(employeeToUpdate.getEmploymentType());
+        updatedEmployee.setHiringDate(employeeToUpdate.getHiringDate());
         return updatedEmployee;
     }
 
+    @Transactional
     @Override
     public void delete(Long employeeId) {
-        Employee employee = get(employeeId);
-        if (employee == null) {
-            throw new ResourceNotFoundException("Employee with id" + employeeId + "is not found!");
-        }
-        iEmployeeRepository.delete(employeeId);
+        get(employeeId);
+        employeeRepo.deleteById(employeeId.intValue());
     }
 }

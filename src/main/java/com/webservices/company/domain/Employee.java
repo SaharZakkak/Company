@@ -1,16 +1,24 @@
 package com.webservices.company.domain;
 
+import jakarta.persistence.*;
+
 import java.time.Instant;
 import java.util.List;
 
+@Entity
+@Table(name = "employees")
 public class Employee {
 
     private String name;
+    @Id
+    @GeneratedValue(generator = "employees_generator")
+    @SequenceGenerator(name = "employees_generator", sequenceName = "employees_id_seq", allocationSize = 1)
     private int id;
     private double salary;
     private String emailAddress;
     private String department;
     private Instant hiringDate;
+    @Enumerated(EnumType.STRING)
     private EmploymentType employmentType;
 
     private Long companyId;

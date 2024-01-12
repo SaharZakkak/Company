@@ -14,14 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class EmployeeService implements IEmployeeService {
-    private final IEmployeeRepository iEmployeeRepository;
-    private final ICompanyRepository iCompanyRepository;
     private final EmployeeRepo employeeRepo;
     private final CompanyRepo companyRepo;
 
-    public EmployeeService(IEmployeeRepository iEmployeeRepository, ICompanyRepository iCompanyRepository, EmployeeRepo employeeRepo, CompanyRepo companyRepo) {
-        this.iEmployeeRepository = iEmployeeRepository;
-        this.iCompanyRepository = iCompanyRepository;
+    public EmployeeService(EmployeeRepo employeeRepo, CompanyRepo companyRepo) {
         this.employeeRepo = employeeRepo;
         this.companyRepo = companyRepo;
     }

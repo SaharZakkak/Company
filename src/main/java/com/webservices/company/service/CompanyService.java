@@ -15,15 +15,10 @@ import java.util.List;
 
 @Service
 public class CompanyService implements ICompanyService {
-    private final ICompanyRepository iCompanyRepository;
-    private final IEmployeeRepository iEmployeeRepository;
-
     private final CompanyRepo companyRepo;
     private final EmployeeRepo employeeRepo;
 
-    public CompanyService(ICompanyRepository iCompanyRepository, IEmployeeRepository iEmployeeRepository, CompanyRepo companyRepo, EmployeeRepo employeeRepo) {
-        this.iCompanyRepository = iCompanyRepository;
-        this.iEmployeeRepository = iEmployeeRepository;
+    public CompanyService(CompanyRepo companyRepo, EmployeeRepo employeeRepo) {
         this.companyRepo = companyRepo;
         this.employeeRepo = employeeRepo;
     }

@@ -15,7 +15,6 @@ public class Company {
     private String name;
     private String address;
     private int numberOfEmployees;
-    //@Column(name = "date_found")
     private Instant dateFound;
     private String typeOfBusiness;
 

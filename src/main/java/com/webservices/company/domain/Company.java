@@ -1,18 +1,24 @@
 package com.webservices.company.domain;
 
+import jakarta.persistence.*;
+
 import java.time.Instant;
 import java.util.List;
 
-public class Company {
+@Entity
+@Table(name = "companies")
+public class Company extends AbstractAuditable{
+    @Id
+    @GeneratedValue(generator = "companies_generator")
+    @SequenceGenerator(name = "companies_generator", sequenceName = "companies_id_seq", allocationSize = 1)
     private Long id;
     private String name;
     private String address;
     private int numberOfEmployees;
     private Instant dateFound;
     private String typeOfBusiness;
-
+    @Transient
     private List<Employee> employees;
-
 
     public Company() {
     }

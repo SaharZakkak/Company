@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "companies")
-public class Company {
+public class Company extends AbstractAuditable{
     @Id
     @GeneratedValue(generator = "companies_generator")
     @SequenceGenerator(name = "companies_generator", sequenceName = "companies_id_seq", allocationSize = 1)
@@ -17,7 +17,6 @@ public class Company {
     private int numberOfEmployees;
     private Instant dateFound;
     private String typeOfBusiness;
-
     @Transient
     private List<Employee> employees;
 

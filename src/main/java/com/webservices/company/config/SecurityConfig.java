@@ -49,7 +49,6 @@ public class SecurityConfig {
                 .password("$2a$12$MocgVNIkZBmqun9/SillRe/FWbRnAVvi47dbZvM.exL7/w7CujAiq")//editorPass
                 .authorities(EDITOR_AUTHORITY)
                 .build();
-
         return new InMemoryUserDetailsManager(user, admin, editor);
     }
 

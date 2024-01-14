@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "employees")
-public class Employee {
+public class Employee extends AbstractAuditable {
 
     private String name;
     @Id

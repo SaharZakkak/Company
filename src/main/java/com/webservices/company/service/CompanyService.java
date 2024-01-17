@@ -4,10 +4,9 @@ import com.webservices.company.domain.Company;
 import com.webservices.company.domain.Employee;
 import com.webservices.company.exceptions.IllegalArgException;
 import com.webservices.company.exceptions.ResourceNotFoundException;
+import com.webservices.company.jms.JmsCompanySender;
 import com.webservices.company.repository.CompanyRepo;
 import com.webservices.company.repository.EmployeeRepo;
-import com.webservices.company.repository.ICompanyRepository;
-import com.webservices.company.repository.IEmployeeRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,10 +16,12 @@ import java.util.List;
 public class CompanyService implements ICompanyService {
     private final CompanyRepo companyRepo;
     private final EmployeeRepo employeeRepo;
+    private final JmsCompanySender jmsCompanySender;
 
-    public CompanyService(CompanyRepo companyRepo, EmployeeRepo employeeRepo) {
+    public CompanyService(CompanyRepo companyRepo, EmployeeRepo employeeRepo, JmsCompanySender jmsCompanySender) {
         this.companyRepo = companyRepo;
         this.employeeRepo = employeeRepo;
+        this.jmsCompanySender = jmsCompanySender;
     }
 
     @Override
@@ -36,6 +37,7 @@ public class CompanyService implements ICompanyService {
         if (newCompany.getNumberOfEmployees() < 0) {
             throw new IllegalArgException("Number of employees can't be negative !");
         }
+        jmsCompanySender.sendCompanyAddedMessage(newCompany);
         return companyRepo.save(newCompany);
     }
 

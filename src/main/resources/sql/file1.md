@@ -3,7 +3,7 @@
 CREATE TABLE companies ( name character NOT NULL,
                          address character NOT NULL,
                          number_of_employees integer NOT NULL,
-                         dateFound timestamp without time zone,
+                         date_found timestamp without time zone,
                          type_of_business character NOT NULL,
                          id serial NOT NULL , 
                          PRIMARY KEY (id) );

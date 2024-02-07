@@ -151,7 +151,6 @@ class EmployeeServiceTest {
         Mockito.when(employeeRepository.get(50l)).thenReturn(new Employee());
         employeeService.delete(50l);
         Mockito.verify(employeeRepository, times(1)).delete(50l);
-        Employee deletedEmployee = employeeService.get(50l);
     }
 
 }

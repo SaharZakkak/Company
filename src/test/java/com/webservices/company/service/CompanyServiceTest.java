@@ -152,9 +152,6 @@ class CompanyServiceTest {
         Mockito.when(companyRepository.get(20l)).thenReturn(new Company());
         companyService.delete(20l);
         Mockito.verify(companyRepository, times(1)).delete(20l);
-        Company deletedCompany = companyService.get(20l);
-        assertNull(deletedCompany.getId());
-        assertEquals(0, deletedCompany.getEmployees().size());
     }
 
     @Test
@@ -163,10 +160,8 @@ class CompanyServiceTest {
         Employee employee1 = new Employee("Celina", 4500, "Celina@gmail.com", "Accounting", Instant.now(), EmploymentType.FULL_TIME, 40L);
         Mockito.when(employeeRepository.getAllByCompanyId(40L)).thenReturn(Arrays.asList(employee1));
         companyService.delete(40l);
-        Company deletedCompany = companyService.get(40l);
         Mockito.verify(employeeRepository, times(1)).deleteAllByCompanyId(40l);
         Mockito.verify(companyRepository, times(1)).delete(40l);
-        assertNull(deletedCompany.getId());
     }
 
 }

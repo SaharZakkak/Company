@@ -32,7 +32,7 @@ public class CompanyRepository implements ICompanyRepository {
     public Company add(Company companyToBeAdded) {
         PreparedStatementCreator preparedStatementCreator = (Connection connection) -> {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO public.companies(\n" +
-                    "\tname, address, number_of_employees, \"dateFound\", type_of_business)\n" +
+                    "\tname, address, number_of_employees, \"date_found\", type_of_business)\n" +
                     "\tVALUES (? ,?, ?, ?, ?)", new String[]{"id"});
             preparedStatement.setString(1, companyToBeAdded.getName());
             preparedStatement.setString(2, companyToBeAdded.getAddress());
@@ -53,9 +53,9 @@ public class CompanyRepository implements ICompanyRepository {
     public Company get(Long id) {
         Company company = null;
         try {
-            company = jdbcTemplate.queryForObject("select * from companies where id = ?", rowMapper,id);
-        } catch (EmptyResultDataAccessException e){
-           return null;
+            company = jdbcTemplate.queryForObject("select * from companies where id = ?", rowMapper, id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
         }
         return company;
     }
@@ -64,7 +64,7 @@ public class CompanyRepository implements ICompanyRepository {
     public Company update(Long id, Company updatedCompany) {
         PreparedStatementCreator preparedStatementCreator = (Connection connection) -> {
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE public.companies\n" +
-                    "\tSET name=?, address=?, number_of_employees=?, \"dateFound\"=?, type_of_business=?\n" +
+                    "\tSET name=?, address=?, number_of_employees=?, \"date_found\"=?, type_of_business=?\n" +
                     "\tWHERE id = ?");
             preparedStatement.setString(1, updatedCompany.getName());
             preparedStatement.setString(2, updatedCompany.getAddress());
